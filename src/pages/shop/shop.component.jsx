@@ -2,12 +2,14 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions.js';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions.js';
 
 import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
 import CollectionPageContainer from '../collection/collection.container';
+import Spinner from '../../components/Spinner/spinner.component.jsx';
 
 import './shop.styles.scss';
+
 
 
 
@@ -23,8 +25,9 @@ class ShopPage extends React.Component {
     // unsubscribeFromSnapshot = null;
 
     componentDidMount(){
-        const { fetchCollectionsStartAsync } = this.props;
-        fetchCollectionsStartAsync();
+        const { fetchCollectionsStart } = this.props;
+        fetchCollectionsStart();
+        //fetchCollectionsStartAsync();
         
         //const { updateCollections } = this.props;
         // const collectionRef = firestore.collection('collection');
@@ -53,25 +56,33 @@ class ShopPage extends React.Component {
     }
 
     render() {
-        const { match } = this.props;
-        return(
-            <div className='shop-page'>
-                <Route
-                    exact
-                    path={`${match.path}`} 
-                    component={CollectionsOverviewContainer}
-                />
-                <Route
-                    path={`${match.path}/:collectionId`}
-                    component={CollectionPageContainer}
-                />
-            </div>
-        );
+
+        try {
+            const { match } = this.props;
+            return(
+                <div className='shop-page'>
+                    <Route
+                        exact
+                        path={`${match.path}`} 
+                        component={CollectionsOverviewContainer}
+                    />
+                    <Route
+                        path={`${match.path}/:collectionId`}
+                        component={CollectionPageContainer}
+                    />
+                </div>
+            );
+        } catch {
+            return (
+                <Spinner />
+            )
+        }
+        
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
+    fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
 })
 
 

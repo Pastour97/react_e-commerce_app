@@ -11,8 +11,7 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import Header from './components/header/header.component';
 
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { setCurrentUser } from './redux/user/user.action';
+import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector'
 
 
@@ -26,17 +25,17 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount(){
-    const {setCurrentUser} = this.props;
+    //const {setCurrentUser} = this.props;
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth =>{ 
-      if(userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth =>{ 
+    //   if(userAuth) {
+    //     const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-              id: snapShot.id,
-              ...snapShot.data()
-          });
+    //     userRef.onSnapshot(snapShot => {
+    //       setCurrentUser({
+    //           id: snapShot.id,
+    //           ...snapShot.data()
+    //       });
 
           /*****
            * I don't know why I had written this :
@@ -46,11 +45,11 @@ class App extends React.Component {
               ...snapShot.data(),
             }
            ******/
-        });
-      }
+    //    });
+    // }
        
-      setCurrentUser(userAuth);
-    });
+    //setCurrentUser(userAuth);
+  //  });
   }
 
   componentWillUnmount(){
