@@ -15,24 +15,22 @@ class signIn extends Component {
             email: '',
             password: ''
         }
-
-    }
+    };
 
     handleSubmit = async event => {
         event.preventDefault();
 
         const { emailSignInStart } = this.props;
-        const { email, password} = this.state;
+        const { email, password } = this.state;
 
         emailSignInStart(email, password);
-    }; 
+    };
 
     handleChange = event => {
         const { value, name } = event.target;
 
         this.setState({[name]: value });
-    }
-    
+    };
 
     render() {
         const { googleSignInStart } = this.props;
@@ -58,7 +56,7 @@ class signIn extends Component {
                         required
                     />
                     <div className='buttons '>
-                        <CustomButton type="submit"> Sign In </CustomButton>
+                        <CustomButton type='submit'> Sign In </CustomButton>
                         <CustomButton type='button' onClick={googleSignInStart} isGoogleSignIn>
                         Sign In With Google 
                         </CustomButton>
@@ -67,13 +65,13 @@ class signIn extends Component {
                 </form>
             </div>
         );
-    }
+    };
 }
 
 const mapDispatchToProps = dispatch => ({
     googleSignInStart: () => dispatch(googleSignInStart()),
     emailSignInStart: (email, password) =>
-        dispatch(emailSignInStart({ email, password }))
-})
+        dispatch(emailSignInStart(email, password)),
+});
 
 export default connect(null, mapDispatchToProps)(signIn);

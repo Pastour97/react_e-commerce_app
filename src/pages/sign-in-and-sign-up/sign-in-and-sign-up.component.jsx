@@ -9,6 +9,6 @@ const SignInAndSignUp = () => (
         <SignIn />
         <SignUp />
     </div>
-)
+);
 
 export default SignInAndSignUp;
